@@ -112,12 +112,12 @@ exports.getStat = catchAsync(async (req, res, next) => {
       { $sort: { count: -1 } }
     ]);
     const songsAndAlbumsByArtist = await Song.aggregate([
-      { $group: { _id: '$artist', totalSongs: { $sum: 1 }, albums: { $addToSet: '$albumId' } } },
+      { $group: { _id: '$artist', totalSongs: { $sum: 1 }, albums: { $addToSet: '$album' } } },
       { $project: { totalSongs: 1, totalAlbums: { $size: '$albums' } } },
       { $sort: { totalSongs: -1 } }
     ]);
     const songsInAlbum = await Song.aggregate([
-      { $group: { _id: '$albumId', count: { $sum: 1 } } },
+      { $group: { _id: '$album', count: { $sum: 1 } } },
       { $sort: { count: -1 } }
     ]);
        const data = {
